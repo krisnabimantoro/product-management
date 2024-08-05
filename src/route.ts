@@ -7,6 +7,13 @@ import authController from "./controllers/auth.controller";
 
 const router = express.Router();
 
+router.get("/test", (req, res) => {
+  res.status(200).json({
+    message: "Server is running ",
+    data: "ok"
+  });
+});
+
 router.get("/products", productsController.findAll);
 router.post("/products", productsController.create);
 router.get("/products/:id", productsController.findOne);
@@ -21,11 +28,7 @@ router.delete("/categories/:id", categoryController.delete);
 
 router.post("/auth/login", authController.login);
 router.post("/auth/register", authController.register);
-router.get(
-    "/auth/me",
-    [authMiddleware, aclMiddleware(["admin"])],
-    authController.me
-  );
+router.get("/auth/me", [authMiddleware, aclMiddleware(["admin"])], authController.me);
 router.put("/auth/profile", authMiddleware, authController.profile);
 
 export default router;
